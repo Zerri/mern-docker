@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const { Pool } = require('pg');
 // const cors = require('cors');
 require('dotenv').config();
 
@@ -17,6 +18,15 @@ connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 });
 
+// Configura il pool di connessioni per PostgreSQL
+const pool = new Pool({
+  user: 'pgadmin',
+  host: 'postgres', // nome del servizio nel tuo docker-compose
+  database: 'mydb',
+  password: 'pgpassword',
+  port: 5432, // porta mappata su Docker
+});
+
 // Definisci il modello Mongoose
 const esempioSchema = new mongoose.Schema({
   nome: String,
@@ -32,6 +42,16 @@ app.get('/api/esempi', async (req, res) => {
     const esempi = await Esempio.find();
     res.setHeader('Content-Type', 'application/json');
     res.json(esempi);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Aggiungi un endpoint per ottenere i dati delle auto
+app.get('/api/cars', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM cars');
+    res.json(result.rows);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
