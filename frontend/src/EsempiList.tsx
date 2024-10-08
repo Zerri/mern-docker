@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 // Definisci il tipo per gli esempi
 interface Esempio {
@@ -6,7 +6,7 @@ interface Esempio {
   nome: string;
 }
 
-const EsempiList: React.FC = () => {
+const EsempiList = () => {
   const [esempi, setEsempi] = useState<Esempio[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,7 +40,7 @@ const EsempiList: React.FC = () => {
 
   return (
     <div style={{textAlign: 'left'}}>
-      <h1>Lista di Esempi</h1>
+      <h1>List Example from Mongo</h1>
       <ul>
         {esempi.map((esempio) => (
           <li key={esempio._id}>
