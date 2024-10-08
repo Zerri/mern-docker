@@ -39,12 +39,12 @@ const EsempiList: React.FC = () => {
   }
 
   return (
-    <div>
+    <div style={{textAlign: 'left'}}>
       <h1>Lista di Esempi</h1>
       <ul>
         {esempi.map((esempio) => (
           <li key={esempio._id}>
-            {esempio.nome} (ID: {esempio._id})
+            {esempio.username} - {esempio.email} - {esempio.age}
           </li>
         ))}
       </ul>
